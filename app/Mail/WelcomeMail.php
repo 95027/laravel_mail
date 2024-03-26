@@ -3,9 +3,9 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Address;
+use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
@@ -14,15 +14,15 @@ class WelcomeMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $my_message;
-    public $subject;
+    public $data;
+    public $file;
     /**
      * Create a new message instance.
      */
-    public function __construct($my_message, $subject)
+    public function __construct($data, $file)
     {
-        $this->my_message = $my_message;
-        $this->subject = $subject;
+        $this->data = $data;
+        $this->file = $file;
     }
 
     /**
@@ -35,7 +35,7 @@ class WelcomeMail extends Mailable
             replyTo: [
                 new Address('kumarchembeti26@gmail.com', 'sai kumar')
             ],
-            subject: $this->subject,
+            //subject: $this->subject,
         );
     }
 
@@ -56,6 +56,11 @@ class WelcomeMail extends Mailable
      */
     public function attachments(): array
     {
-        return [];
+        if($this->file){
+            $attachments = [
+                Attachment::fromPath(public_path('pdfs/' . $this->file)),
+            ];
+        }
+        return $attachments;
     }
 }

@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    {{$subject}}
-    {{$my_message}}
+    name: {{$data['name']}}
+    email: {{$data['email']}}
 </body>
 </html>

@@ -7,8 +7,12 @@
     <title>Document</title>
 </head>
 <body>
-    <a href={{route('mail.send')}}>
-        <button>Click to mail</button>
-    </a>
+    <form action="{{route('contact.form')}}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <input type="text" name="name" placeholder="name">
+        <input type="email" name="email" required placeholder="email">
+        <input type="file" name = "pdf" required>
+            <button type="submit">Click to mail</button>
+    </form>
 </body>
 </html>
